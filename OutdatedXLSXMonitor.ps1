@@ -1,20 +1,22 @@
 ﻿############################################################
 #                                                          #
 #  Script: OutdatedXLSXMonitor                             #
-#  Last Updated: 2025-01-31                                #
+#  Last Updated: 2025-02-05                  Version 1.1   #
 #  Written by: Fabio Siqueira                              #
 #                                                          #
 ############################################################
 # PowerShell Script to monitor outdated .csv, .txt, .xlsx files.
 
+############################################################
+
 # Settings
-$DirectoryToScan = "C:\"
-$TimeThresholdHours = 2 # 2 Hours
+$DirectoryToScan = "C:\..." # Directory to Scan
+$TimeThresholdHours = 1 # 1 Hour
 
-#$MailTo = "User@Mail.com"
-#$MailFrom = "User@Mail.com"
+$MailTo = "User@Mail.com" # User Sending the Mail Message
+$MailFrom = "User@Mail.com" # User Receiving the Mail Message
 
-#$SMTPServer = "SMTP.Server.com"
+$SMTPServer = "SMTP.Server.com" # SMTP Server in use
 #$Port = 25
 #$Port = 465
 #$Port = 587
@@ -31,7 +33,7 @@ Function Get-OutdatedFiles {
     $TimeThresholdSpan = New-TimeSpan -Hours $TimeThreshold
     $OutdatedFiles = @()
 
-    Get-ChildItem -Path $Directory -Recurse -Include "*.csv" "*.txt" "*.xlsx" | ForEach-Object {
+    Get-ChildItem -Path $Directory -Recurse -Include "*.csv", "*.txt", "*.xlsx" | ForEach-Object {
         $LastModified = $_.LastWriteTime
         $TimeDifference = $Now - $LastModified
 
